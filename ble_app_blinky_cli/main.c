@@ -224,7 +224,7 @@ static void usbd_user_ev_handler(app_usbd_event_type_t event)
 /**
  * @brief Command line interface instance
  * */
-#define CLI_EXAMPLE_LOG_QUEUE_SIZE  (4)
+#define CLI_EXAMPLE_LOG_QUEUE_SIZE  (16)//4)
 
 #if CLI_OVER_USB_CDC_ACM
 NRF_CLI_CDC_ACM_DEF(m_cli_cdc_acm_transport);
@@ -396,13 +396,12 @@ static void usbd_init(void)
                 app_usbd_cdc_acm_class_inst_get(&nrf_cli_cdc_acm);
         ret = app_usbd_class_append(class_cdc_acm);
         APP_ERROR_CHECK(ret);
+#endif 
+}
 
-//
-//        app_usbd_class_inst_t const * class_cdc_acm_1 =
-//        app_usbd_cdc_acm_class_inst_get(&m_app_cdc_acm_1);
-//        ret = app_usbd_class_append(class_cdc_acm_1);
-//        APP_ERROR_CHECK(ret);
-
+static void usbd_enable(void)
+{
+        ret_code_t ret;
         if (USBD_POWER_DETECTION)
         {
                 ret = app_usbd_power_events_enable();
@@ -417,8 +416,9 @@ static void usbd_init(void)
         }
 
         /* Give some time for the host to enumerate and connect to the USB CDC port */
-        nrf_delay_ms(1000);
-#endif
+        nrf_delay_ms(500);
+
+//#endif
 }
 
 static void cli_process(void)
@@ -430,7 +430,6 @@ static void cli_process(void)
 #if CLI_OVER_UART
         nrf_cli_process(&m_cli_uart);
 #endif
-
         nrf_cli_process(&m_cli_rtt);
 }
 
@@ -626,7 +625,7 @@ static void led_write_handler(uint16_t conn_handle, ble_lbs_t * p_lbs, uint8_t l
 //                    if (err_code == NRF_SUCCESS)
 //                    {
 //                    }
-//                }      
+//                }
         }
         else
         {
@@ -638,7 +637,7 @@ static void led_write_handler(uint16_t conn_handle, ble_lbs_t * p_lbs, uint8_t l
 //                    if (err_code == NRF_SUCCESS)
 //                    {
 //                    }
-//                }      
+//                }
 
         }
 }
@@ -924,23 +923,23 @@ static void idle_state_handle(void)
 void idle_task(void * p_context)
 {
 
-    advertising_start();
+        advertising_start();
 
-    // Enter main loop.
-    for (;;)
-    {
-        if (NRF_LOG_PROCESS() == false)
+        // Enter main loop.
+        for (;;)
         {
-            nrf_pwr_mgmt_run();
+                if (NRF_LOG_PROCESS() == false)
+                {
+                        nrf_pwr_mgmt_run();
+                }
+                task_yield();
         }
-        task_yield();
-    }
 }
 
 /**@brief Function for application main entry.
  */
 int main(void)
-    {
+{
 
         ret_code_t ret;
 
@@ -961,7 +960,7 @@ int main(void)
         nrf_drv_clock_lfclk_request(NULL);
 
         // Initialize.
-        log_init();
+        //log_init();
         leds_init();
         timers_init();
 
@@ -975,6 +974,14 @@ int main(void)
 
         cli_init();
         usbd_init();
+
+        nrf_delay_ms(1000);
+        log_init();
+
+        usbd_enable();
+
+
+        nrf_delay_ms(3000);
 
         buttons_init();
         power_management_init();
@@ -992,6 +999,8 @@ int main(void)
 
         //APP_ERROR_CHECK(nrf_cli_task_create(&m_cli));
         APP_ERROR_CHECK(nrf_cli_task_create(&m_cli_rtt));
+
+
 //        APP_ERROR_CHECK(nrf_cli_task_create(&m_cli_uart));
         APP_ERROR_CHECK(nrf_cli_task_create(&m_cli_cdc_acm));
 

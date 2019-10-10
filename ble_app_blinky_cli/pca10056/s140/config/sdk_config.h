@@ -4313,72 +4313,72 @@
 #define UART_ENABLED 1
 #endif
 // <o> UART_DEFAULT_CONFIG_HWFC  - Hardware Flow Control
- 
-// <0=> Disabled 
-// <1=> Enabled 
+
+// <0=> Disabled
+// <1=> Enabled
 
 #ifndef UART_DEFAULT_CONFIG_HWFC
 #define UART_DEFAULT_CONFIG_HWFC 0
 #endif
 
 // <o> UART_DEFAULT_CONFIG_PARITY  - Parity
- 
-// <0=> Excluded 
-// <14=> Included 
+
+// <0=> Excluded
+// <14=> Included
 
 #ifndef UART_DEFAULT_CONFIG_PARITY
 #define UART_DEFAULT_CONFIG_PARITY 0
 #endif
 
 // <o> UART_DEFAULT_CONFIG_BAUDRATE  - Default Baudrate
- 
-// <323584=> 1200 baud 
-// <643072=> 2400 baud 
-// <1290240=> 4800 baud 
-// <2576384=> 9600 baud 
-// <3862528=> 14400 baud 
-// <5152768=> 19200 baud 
-// <7716864=> 28800 baud 
-// <10289152=> 38400 baud 
-// <15400960=> 57600 baud 
-// <20615168=> 76800 baud 
-// <30801920=> 115200 baud 
-// <61865984=> 230400 baud 
-// <67108864=> 250000 baud 
-// <121634816=> 460800 baud 
-// <251658240=> 921600 baud 
-// <268435456=> 1000000 baud 
+
+// <323584=> 1200 baud
+// <643072=> 2400 baud
+// <1290240=> 4800 baud
+// <2576384=> 9600 baud
+// <3862528=> 14400 baud
+// <5152768=> 19200 baud
+// <7716864=> 28800 baud
+// <10289152=> 38400 baud
+// <15400960=> 57600 baud
+// <20615168=> 76800 baud
+// <30801920=> 115200 baud
+// <61865984=> 230400 baud
+// <67108864=> 250000 baud
+// <121634816=> 460800 baud
+// <251658240=> 921600 baud
+// <268435456=> 1000000 baud
 
 #ifndef UART_DEFAULT_CONFIG_BAUDRATE
 #define UART_DEFAULT_CONFIG_BAUDRATE 30801920
 #endif
 
 // <o> UART_DEFAULT_CONFIG_IRQ_PRIORITY  - Interrupt priority
- 
+
 
 // <i> Priorities 0,2 (nRF51) and 0,1,4,5 (nRF52) are reserved for SoftDevice
-// <0=> 0 (highest) 
-// <1=> 1 
-// <2=> 2 
-// <3=> 3 
-// <4=> 4 
-// <5=> 5 
-// <6=> 6 
-// <7=> 7 
+// <0=> 0 (highest)
+// <1=> 1
+// <2=> 2
+// <3=> 3
+// <4=> 4
+// <5=> 5
+// <6=> 6
+// <7=> 7
 
 #ifndef UART_DEFAULT_CONFIG_IRQ_PRIORITY
 #define UART_DEFAULT_CONFIG_IRQ_PRIORITY 6
 #endif
 
 // <q> UART_EASY_DMA_SUPPORT  - Driver supporting EasyDMA
- 
+
 
 #ifndef UART_EASY_DMA_SUPPORT
 #define UART_EASY_DMA_SUPPORT 1
 #endif
 
 // <q> UART_LEGACY_SUPPORT  - Driver supporting Legacy mode
- 
+
 
 #ifndef UART_LEGACY_SUPPORT
 #define UART_LEGACY_SUPPORT 1
@@ -4390,7 +4390,7 @@
 #define UART0_ENABLED 1
 #endif
 // <q> UART0_CONFIG_USE_EASY_DMA  - Default setting for using EasyDMA
- 
+
 
 #ifndef UART0_CONFIG_USE_EASY_DMA
 #define UART0_CONFIG_USE_EASY_DMA 1
@@ -7673,7 +7673,7 @@
 
 
 #ifndef NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED
-#define NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED 1
+#define NRF_FPRINTF_FLAG_AUTOMATIC_CR_ON_LF_ENABLED 0
 #endif
 
 // </h>
@@ -7763,7 +7763,7 @@
 // <e> NRF_LOG_BACKEND_RTT_ENABLED - nrf_log_backend_rtt - Log RTT backend
 //==========================================================
 #ifndef NRF_LOG_BACKEND_RTT_ENABLED
-#define NRF_LOG_BACKEND_RTT_ENABLED 1
+#define NRF_LOG_BACKEND_RTT_ENABLED 0
 #endif
 // <o> NRF_LOG_BACKEND_RTT_TEMP_BUFFER_SIZE - Size of buffer for partially processed strings.
 // <i> Size of the buffer is a trade-off between RAM usage and processing.
@@ -7792,6 +7792,19 @@
 #endif
 
 // </e>
+
+// <e> NRF_LOG_BACKEND_USB_ENABLED - nrf_log_backend_usb - Log USB backend
+//==========================================================
+#ifndef NRF_LOG_BACKEND_USB_ENABLED
+#define NRF_LOG_BACKEND_USB_ENABLED 1
+#endif
+
+// <o> NRF_LOG_BACKEND_USB_TX_PIN - USB TX pin
+#ifndef NRF_LOG_BACKEND_USB_TX_PIN
+#define NRF_LOG_BACKEND_USB_TX_PIN 6
+#endif
+// </e>
+
 
 // <e> NRF_LOG_BACKEND_UART_ENABLED - nrf_log_backend_uart - Log UART backend
 //==========================================================
@@ -7853,7 +7866,7 @@
 // <i> a timestamp and up to 2 arguments in a single memory object.
 
 #ifndef NRF_LOG_MSGPOOL_ELEMENT_SIZE
-#define NRF_LOG_MSGPOOL_ELEMENT_SIZE 20
+#define NRF_LOG_MSGPOOL_ELEMENT_SIZE 40
 #endif
 
 // <o> NRF_LOG_MSGPOOL_ELEMENT_COUNT - Number of elements in the pool of memory objects
@@ -7863,7 +7876,7 @@
 // <i> RAM memory usage.
 
 #ifndef NRF_LOG_MSGPOOL_ELEMENT_COUNT
-#define NRF_LOG_MSGPOOL_ELEMENT_COUNT 8
+#define NRF_LOG_MSGPOOL_ELEMENT_COUNT 16
 #endif
 
 // </h>
@@ -7894,7 +7907,7 @@
 // <16384=> 16384
 
 #ifndef NRF_LOG_BUFSIZE
-#define NRF_LOG_BUFSIZE 1024
+#define NRF_LOG_BUFSIZE 4096
 #endif
 
 // <q> NRF_LOG_CLI_CMDS  - Enable CLI commands for the module.
@@ -7943,7 +7956,7 @@
 // <1024=> 1024
 
 #ifndef NRF_LOG_STR_PUSH_BUFFER_SIZE
-#define NRF_LOG_STR_PUSH_BUFFER_SIZE 128
+#define NRF_LOG_STR_PUSH_BUFFER_SIZE 256
 #endif
 
 // <o> NRF_LOG_STR_PUSH_BUFFER_SIZE  - Size of the buffer dedicated for strings stored using @ref NRF_LOG_PUSH.
@@ -7957,7 +7970,7 @@
 // <1024=> 1024
 
 #ifndef NRF_LOG_STR_PUSH_BUFFER_SIZE
-#define NRF_LOG_STR_PUSH_BUFFER_SIZE 128
+#define NRF_LOG_STR_PUSH_BUFFER_SIZE 512
 #endif
 
 // <e> NRF_LOG_USES_COLORS - If enabled then ANSI escape code for colors is prefixed to every string
