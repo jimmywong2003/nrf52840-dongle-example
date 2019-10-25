@@ -65,8 +65,8 @@
   <Watches active="0" update="Never"/>
  </Watch4>
  <Files>
-  <SessionOpenFile windowGroup="DockEditLeft" x="32" y="41" useTextEdit="1" useBinaryEdit="0" left="0" path="ble_app_blinky_cli_pca10056_s140.emProject" selected="0" top="34" codecName="Default"/>
-  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="939" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="925" codecName=""/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="41" useTextEdit="1" useBinaryEdit="0" left="0" path="ble_app_blinky_cli_pca10056_s140.emProject" selected="0" top="34" codecName="Default"/>
+  <SessionOpenFile windowGroup="DockEditLeft" x="0" y="941" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../main.c" selected="1" top="925" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="7675" useTextEdit="1" useBinaryEdit="0" left="0" path="../config/sdk_config.h" selected="0" top="7645" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="59" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../sdk_mod/libraries/log/src/nrf_log_backend_usb.c" selected="0" top="39" codecName="Default"/>
   <SessionOpenFile windowGroup="DockEditLeft" x="0" y="64" useTextEdit="1" useBinaryEdit="0" left="0" path="../../../../../../integration/nrfx/legacy/nrf_drv_usbd.h" selected="0" top="47" codecName="Default"/>
