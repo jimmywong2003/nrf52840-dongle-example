@@ -99,8 +99,8 @@ static volatile bool nrf_error_resources = false;
 #define ITS_ENABLE_PIN_DEBUGGING 0
 
 #if (ITS_ENABLE_PIN_DEBUGGING == 1)
-#define ITS_DEBUG_PIN_SET(_pin) nrf_gpio_pin_set(DBG_PIN_##_pin)
-#define ITS_DEBUG_PIN_CLR(_pin) nrf_gpio_pin_clear(DBG_PIN_##_pin)
+#define ITS_DEBUG_PIN_SET(_pin) nrf_gpio_pin_set(DBG_PIN_ ## _pin)
+#define ITS_DEBUG_PIN_CLR(_pin) nrf_gpio_pin_clear(DBG_PIN_ ## _pin)
 #else
 #define ITS_DEBUG_PIN_SET(_pin)
 #define ITS_DEBUG_PIN_CLR(_pin)
@@ -303,6 +303,11 @@ static uint32_t push_c_data_packets()
         //NRF_LOG_INFO("%d", count++);
         while (return_code == NRF_SUCCESS)
         {
+                if (m_file_pos > m_file_size)
+                {
+                        break;
+                }
+
                 if ((m_file_size - m_file_pos) > packet_length)
                 {
                         packet_size = packet_length;
@@ -466,13 +471,14 @@ uint32_t ble_its_c_img_info_send(ble_its_c_t *p_ble_its_c, ble_its_c_img_info_t 
         memcpy(&data_buf[0], img_info, sizeof(ble_its_c_img_info_t));
 
         ble_gattc_write_params_t const write_params =
-            {
+        {
                 .write_op = BLE_GATT_OP_WRITE_CMD,
                 .flags = BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE,
                 .handle = p_ble_its_c->handles.its_rx_handle,
                 .offset = 0,
                 .len = length,
-                .p_value = data_buf};
+                .p_value = data_buf
+        };
         return sd_ble_gattc_write(p_ble_its_c->conn_handle, &write_params);
 }
 
@@ -522,13 +528,14 @@ uint32_t ble_its_c_string_send(ble_its_c_t *p_ble_its_c, uint8_t *p_string, uint
         }
 
         ble_gattc_write_params_t const write_params =
-            {
+        {
                 .write_op = BLE_GATT_OP_WRITE_CMD,
                 .flags = BLE_GATT_EXEC_WRITE_FLAG_PREPARED_WRITE,
                 .handle = p_ble_its_c->handles.its_rx_data_handle,
                 .offset = 0,
                 .len = length,
-                .p_value = p_string};
+                .p_value = p_string
+        };
 
         return sd_ble_gattc_write(p_ble_its_c->conn_handle, &write_params);
 }

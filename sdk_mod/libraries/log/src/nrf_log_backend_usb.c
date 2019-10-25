@@ -177,6 +177,8 @@ void nrf_log_backend_usb_init(void)
 
 static void serial_tx(void const * p_context, char const * p_buffer, size_t len)
 {
+
+#if 0
         uint8_t len8 = (uint8_t)(len & 0x000000FF);
         m_xfer_done = false;
         ret_code_t err_code;
@@ -193,6 +195,31 @@ static void serial_tx(void const * p_context, char const * p_buffer, size_t len)
         {
 
         }
+
+#else
+        uint8_t len8 = (uint8_t)(len & 0x000000FF);
+        m_xfer_done = false;
+        ret_code_t err_code;
+
+        if (!m_usb_log_is_opened)
+            return;
+
+        //size_t size = sprintf(m_tx_buffer, "%s", (char *)p_buffer);
+        memcpy(m_tx_buffer, p_buffer, len); 
+        //                    size_t size = sprintf(m_tx_buffer, "Received LED OFF!\n");
+        err_code = app_usbd_cdc_acm_write(&m_log_app_cdc_acm, m_tx_buffer, len);
+   //     err_code = app_usbd_cdc_acm_write(&m_log_app_cdc_acm, (uint8_t*)p_buffer, len8);
+        APP_ERROR_CHECK(err_code);
+        while (m_async_mode && (m_xfer_done == false))
+        {
+
+        }
+#endif
+
+
+
+
+
 }
 
 static void nrf_log_backend_usb_put(nrf_log_backend_t const * p_backend,

@@ -83,8 +83,8 @@ static uint32_t count = 0;
 #define ITS_ENABLE_PIN_DEBUGGING 0
 
 #if (ITS_ENABLE_PIN_DEBUGGING == 1)
-#define ITS_DEBUG_PIN_SET(_pin) nrf_gpio_pin_set(DBG_PIN_##_pin)
-#define ITS_DEBUG_PIN_CLR(_pin) nrf_gpio_pin_clear(DBG_PIN_##_pin)
+#define ITS_DEBUG_PIN_SET(_pin) nrf_gpio_pin_set(DBG_PIN_ ## _pin)
+#define ITS_DEBUG_PIN_CLR(_pin) nrf_gpio_pin_clear(DBG_PIN_ ## _pin)
 #else
 #define ITS_DEBUG_PIN_SET(_pin)
 #define ITS_DEBUG_PIN_CLR(_pin)
@@ -150,8 +150,8 @@ static void on_write(ble_its_t *p_its, ble_evt_t const *p_ble_evt)
         ble_gatts_evt_write_t const *p_evt_write = &p_ble_evt->evt.gatts_evt.params.write;
 
         if (
-            (p_evt_write->handle == p_its->tx_handles.cccd_handle) &&
-            (p_evt_write->len == 2))
+                (p_evt_write->handle == p_its->tx_handles.cccd_handle) &&
+                (p_evt_write->len == 2))
         {
                 if (ble_srv_is_notification_enabled(p_evt_write->data))
                 {
@@ -164,8 +164,8 @@ static void on_write(ble_its_t *p_its, ble_evt_t const *p_ble_evt)
                 }
         }
         else if (
-            (p_evt_write->handle == p_its->img_info_handles.cccd_handle) &&
-            (p_evt_write->len == 2))
+                (p_evt_write->handle == p_its->img_info_handles.cccd_handle) &&
+                (p_evt_write->len == 2))
         {
                 if (ble_srv_is_notification_enabled(p_evt_write->data))
                 {
@@ -178,8 +178,8 @@ static void on_write(ble_its_t *p_its, ble_evt_t const *p_ble_evt)
                 }
         }
         else if (
-            (p_evt_write->handle == p_its->rx_handles.value_handle) &&
-            (p_its->evt_handler != NULL))
+                (p_evt_write->handle == p_its->rx_handles.value_handle) &&
+                (p_its->evt_handler != NULL))
         {
                 ble_its_evt_t its_evt;
                 its_evt.evt_type = BLE_ITS_EVT_ITS_RX_EVT;
@@ -189,8 +189,8 @@ static void on_write(ble_its_t *p_its, ble_evt_t const *p_ble_evt)
                 p_its->evt_handler(p_its, &its_evt);
         }
         else if (
-            (p_evt_write->handle == p_its->rx_data_handles.value_handle) &&
-            (p_its->evt_handler != NULL))
+                (p_evt_write->handle == p_its->rx_data_handles.value_handle) &&
+                (p_its->evt_handler != NULL))
         {
                 ble_its_evt_t its_evt;
                 its_evt.evt_type = BLE_ITS_EVT_ITS_RX_DATA_EVT;
@@ -438,6 +438,10 @@ static uint32_t push_data_packets()
         NRF_LOG_INFO("%d", count++);
         while (return_code == NRF_SUCCESS)
         {
+                if (file_pos > file_size)
+                {
+                        break;
+                }
                 if ((file_size - file_pos) > packet_length)
                 {
                         packet_size = packet_length;
