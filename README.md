@@ -1,6 +1,6 @@
 # nrf52840-dongle-example
 
-Examples on the nRF52840 dongle 
+This example is to use the ble_app_blinky + CLI (Command line interface) and then print out the LOG through the USB CDC Class.
 
 ## Requirement
 
